@@ -2,6 +2,8 @@ package net.snakefangox.worldshell.storage;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+
+import com.jme3.math.Vector3f;
 import net.snakefangox.worldshell.math.Quaternion;
 import net.snakefangox.worldshell.math.Vector3d;
 

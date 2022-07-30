@@ -13,6 +13,7 @@ group = project.maven_group
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven { url "https://lazurite.dev/releases" }
 }
 
 sourceSets {
@@ -54,6 +55,9 @@ dependencies {
 
     // Needed for the test mod
     testmodImplementation sourceSets.main.output
+    modImplementation('dev.lazurite:rayon-fabric:1.6.0') {
+        exclude module: 'transporter-fabric'
+    }
     //testmodImplementation 'com.github.Snakefangox:rapid-register:2.2'
 }
 

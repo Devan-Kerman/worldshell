@@ -60,7 +60,7 @@ public abstract class WorldShellEntity extends Entity implements LocalSpace {
 
 	private final WorldShellSettings settings;
 	private final Microcosm microcosm;
-	private final ShellCollisionHull hull;
+	protected final ShellCollisionHull hull;
 
 	private int shellId = 0;
 	private Quaternion inverseRotation = Quaternion.IDENTITY;
@@ -69,7 +69,7 @@ public abstract class WorldShellEntity extends Entity implements LocalSpace {
 		super(type, world);
 		this.settings = shellSettings;
 		microcosm = world.isClient() ? new Microcosm(this, settings.updateFrames()) : new Microcosm(this);
-		hull = settings.handleRotatedCollision() ? new RotatingShellCollisionHull(this) : new ShellCollisionHull(this);
+		hull = this.createHull(settings.handleRotatedCollision());
 	}
 
 	public void initializeWorldShell(Map<BlockPos, BlockState> stateMap, Map<BlockPos, BlockEntity> entityMap, List<Microcosm.ShellTickInvoker> tickers) {
@@ -203,9 +203,10 @@ public abstract class WorldShellEntity extends Entity implements LocalSpace {
 		}
 	}
 
+	private static final Box EMPTY = Box.from(new Vec3d(0, 0, 0));
 	@Override
 	public Box getBoundingBox() {
-		return hull.getDelegateBox();
+		return hull == null ? EMPTY : hull.getDelegateBox();
 	}
 
 	@Override
@@ -305,5 +306,9 @@ public abstract class WorldShellEntity extends Entity implements LocalSpace {
 	@Override
 	public double getLocalZ() {
 		return getZ() + getBlockOffset().z;
+	}
+	
+	protected ShellCollisionHull createHull(boolean handleRotation) {
+		return handleRotation ? new RotatingShellCollisionHull(this) : new ShellCollisionHull(this);
 	}
 }

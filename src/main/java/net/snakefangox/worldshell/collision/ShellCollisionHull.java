@@ -30,7 +30,8 @@ public class ShellCollisionHull implements LocalSpace {
 	protected final Vector3d localVector = new Vector3d(), localVector2 = new Vector3d(), localVector3 = new Vector3d();
 	protected final Matrix3d localMatrix = new Matrix3d();
 	protected final BlockPos.Mutable localBp = new BlockPos.Mutable();
-
+	
+	
 	public ShellCollisionHull(WorldShellEntity entity) {
 		this.entity = entity;
 		dBox = new HullBoxDelegate(new Box(BlockPos.ORIGIN), this);
